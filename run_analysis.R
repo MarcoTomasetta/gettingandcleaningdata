@@ -23,4 +23,10 @@ FeaturesNames <- read.table(file.path(path, "features.txt"),head=FALSE)
 names(Features)<- FeaturesNames$V2
 Complessive <- cbind(Subject, Activity)
 DF <- cbind(Features, Complessive)
-
+#select the names of the features regarding mean and standard deviation
+subsetFeaturesNames<-FeaturesNames$V2[grep("mean\\(\\)|std\\(\\)", FeaturesNames$V2)]
+selectedNames<-c(as.character(subsetFeaturesNames), "subject", "activity" )
+#subset only mean and standard deviation for each measurement
+DF<-subset(DF,select=selectedNames)
+# assign the activity labels to vector activityLabels
+activityLabels <- read.table(file.path(path, "activity_labels.txt"),header = FALSE)
